@@ -1,10 +1,10 @@
 # minimal-canvas
 
-FIXME: Write a one-line description of your library/project.
+How small can we make a JS artifact from clojurescript source that renders something cool to a canvas.
 
 ## Overview
 
-FIXME: Write a paragraph about the library/project and highlight its goals.
+A minimally sized canvas graphics demo
 
 ## Setup
 
@@ -30,10 +30,10 @@ To create a production build run:
     lein do clean, cljsbuild once min
 
 And open your browser in `resources/public/index.html`. You will not
-get live reloading, nor a REPL. 
+get live reloading, nor a REPL.
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2016 FIXME
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
