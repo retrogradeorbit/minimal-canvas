@@ -45,11 +45,14 @@ build/node-v6.3.1-linux-x64: build/node-v6.3.1-linux-x64.tar.xz
 
 export PATH := build/node-v6.3.1-linux-x64/bin:$(PATH)
 
-build/node-v6.3.1-linux-x64/bin/uglifyjs: build/node-v6.3.1-linux-x64
+build/node-v6.3.1-linux-x64/lib/node_modules/uglify-js/bin/uglifyjs: build/node-v6.3.1-linux-x64
 	npm install uglify-js -g
 
 resources/public/js/compiled/minimal_canvas.min.js: build/node-v6.3.1-linux-x64/bin/uglifyjs $(APP)
 	build/node-v6.3.1-linux-x64/bin/uglifyjs --compress --mangle -- resources/public/js/compiled/minimal_canvas.js > resources/public/js/compiled/minimal_canvas.min.js
 
 resources/public/js/compiled/minimal_canvas.min.js.gz: resources/public/js/compiled/minimal_canvas.min.js
-	gzip -9 resources/public/js/compiled/minimal_canvas.min.js
+	gzip -9f resources/public/js/compiled/minimal_canvas.min.js
+	ls -alF resources/public/js/compiled/minimal_canvas.min.js.gz
+
+release: resources/public/js/compiled/minimal_canvas.min.js.gz
