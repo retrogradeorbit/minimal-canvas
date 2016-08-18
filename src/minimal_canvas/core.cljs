@@ -29,6 +29,19 @@
 
 ;; build the actual function
 (def request-animation-frame (make-request-animation-frame))
+
+(defn next-frame
+  "returns a single use channel which closes on next frame callback.
+  pulling from it waits exactly one frame. eg
+  ```
+  ;; wait one frame
+  (<! (next-frame))
+  ```"
+  []
+  (let [c (chan)]
+    (request-animation-frame #(close! c))
+    c))
+
 (let [canvas (js/document.getElementById "my-canvas")
       ctx (.getContext canvas "2d")]
   (set! (.-fillStyle ctx) "green")
