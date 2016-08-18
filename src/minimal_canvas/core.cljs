@@ -1,5 +1,8 @@
 (ns minimal-canvas.core
-  (:require ))
+  (:require
+   [cljs.core.async :refer [chan close!]])
+  (:require-macros
+   [cljs.core.async.macros :refer [go]]))
 
 (let [canvas (js/document.getElementById "my-canvas")
       ctx (.getContext canvas "2d")]
