@@ -44,5 +44,13 @@
 
 (let [canvas (js/document.getElementById "my-canvas")
       ctx (.getContext canvas "2d")]
-  (set! (.-fillStyle ctx) "green")
-  (.fillRect ctx 10 10 200 200))
+  (go
+    (loop []
+      (loop [c 0]
+        (set! (.-fillStyle ctx) "white")
+        (.fillRect ctx 10 10 200 200)
+        (set! (.-fillStyle ctx) "green")
+        (.fillRect ctx 10 10 c 200)
+        (<! (next-frame))
+        (when (< c 200) (recur (inc c))))
+      (recur))))
