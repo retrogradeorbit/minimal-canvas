@@ -54,3 +54,27 @@
         (<! (next-frame))
         (when (< c 200) (recur (inc c))))
       (recur))))
+(defn hex [n]
+  (let [h (.toString (int n) 16)
+        l (count h)]
+    (case l
+      0 "00"
+      1 (str "0" h)
+      2 h
+      (subs h (- l 2)))))
+
+(defn rgb-to-hash [[r g b]]
+  (str "#" (hex r) (hex g) (hex b)))
+
+(defn colour-blend [[rs gs bs] [re ge be] steps]
+  (let [dr (/ (- re rs) steps)
+        dg (/ (- ge gs) steps)
+        db (/ (- be bs) steps)]
+    (for [n (range steps)]
+      [(+ rs (* n dr))
+       (+ gs (* n dg))
+       (+ bs (* n db))])))
+
+(defn hash-blend [start end steps]
+  (map rgb-to-hash (colour-blend start end steps)))
+
