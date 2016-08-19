@@ -42,18 +42,6 @@
     (request-animation-frame #(close! c))
     c))
 
-(let [canvas (js/document.getElementById "my-canvas")
-      ctx (.getContext canvas "2d")]
-  (go
-    (loop []
-      (loop [c 0]
-        (set! (.-fillStyle ctx) "white")
-        (.fillRect ctx 10 10 200 200)
-        (set! (.-fillStyle ctx) "green")
-        (.fillRect ctx 10 10 c 200)
-        (<! (next-frame))
-        (when (< c 200) (recur (inc c))))
-      (recur))))
 (defn hex [n]
   (let [h (.toString (int n) 16)
         l (count h)]
@@ -78,3 +66,22 @@
 (defn hash-blend [start end steps]
   (map rgb-to-hash (colour-blend start end steps)))
 
+(defn main []
+  (let [canvas (js/document.getElementById "my-canvas")
+        ctx (.getContext canvas "2d")]
+    (go
+      (loop []
+        (loop [[colour & remain]
+               (concat
+                (hash-blend [255 0 0] [0 255 128] 50)
+                (hash-blend [0 255 128] [0 0 255] 50)
+                (hash-blend [0 0 255] [255 0 0] 50)
+                )]
+          (set! (.-fillStyle ctx) colour)
+          (.fillRect ctx 0 0 640 480)
+          (<! (next-frame))
+          (when (seq remain)
+            (recur remain)))
+        (recur)))))
+
+(main)
