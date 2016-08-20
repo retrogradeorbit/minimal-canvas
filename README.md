@@ -6,7 +6,7 @@ How small can we make a JS artifact from clojurescript source that renders somet
 
 A minimally sized canvas graphics demo.
 
-The gzip artifact currently sits at 1860 bytes.
+The gzip artifact currently sits at 24618 bytes.
 
 ## Setup
 
